@@ -22,7 +22,6 @@ Once syslog-ng is installed, edit the relevant config file (most likely /etc/sys
 ```ssh
 @version: 3.5
 @include "scl.conf"
-@include "`scl-root`/system/tty10.conf"
 
 # First, set some global options.
 options {
@@ -70,12 +69,19 @@ log {
 # Include all config files in /etc/syslog-ng/conf.d/
 ###
 @include "/etc/syslog-ng/conf.d/*.conf"
+
 ```
 
 Next start syslog-ng:
 
 ```ssh
 service syslog-ng restart
+```
+
+Add firewal rules:
+
+```ssh
+firewall-cmd --zone public --add-service syslog
 ```
 
 Add the following to your LibreNMS `config.php` file to enable the Syslog extension:
